@@ -1,6 +1,9 @@
+import "../global.css";
+
 import type { PropsWithChildren } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Platform } from "react-native";
+import { ThemeProvider as NavigationThemeProvider } from "@react-navigation/native";
 import { Slot } from "expo-router";
 import Constants from "expo-constants";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -11,7 +14,8 @@ import { createConfigApi, createFeatureFlagReader, type FeatureFlagReader } from
 import { SessionShellProvider, type SessionShellServices } from "../src/features/auth/presentation";
 import { createJsonHttpClient } from "../src/shared/api";
 import { RuntimeConfigProvider } from "../src/shared/config";
-import { ThemeProvider } from "../src/shared/ui";
+import { ThemeProvider, useTheme } from "../src/shared/ui";
+import { createNavigationTheme } from "../src/shared/ui/themes/navigation-theme";
 
 function resolveApiBaseUrl() {
   const extra = (Constants.expoConfig?.extra ?? {}) as Record<string, string | undefined>;
@@ -48,17 +52,26 @@ export function RootLayout({
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <RuntimeConfigProvider
-          apiBaseUrl={apiBaseUrl}
-          bootstrapConfig={bootstrapConfig}
-          reader={featureFlagReader}
-          loading={featureFlagLoading}
-        >
-          <SessionShellProvider services={services}>{children ?? <Slot />}</SessionShellProvider>
-        </RuntimeConfigProvider>
+        <NavigationThemeBridge>
+          <RuntimeConfigProvider
+            apiBaseUrl={apiBaseUrl}
+            bootstrapConfig={bootstrapConfig}
+            reader={featureFlagReader}
+            loading={featureFlagLoading}
+          >
+            <SessionShellProvider services={services}>{children ?? <Slot />}</SessionShellProvider>
+          </RuntimeConfigProvider>
+        </NavigationThemeBridge>
       </ThemeProvider>
     </SafeAreaProvider>
   );
+}
+
+function NavigationThemeBridge({ children }: PropsWithChildren) {
+  const theme = useTheme();
+  const navigationTheme = useMemo(() => createNavigationTheme(theme), [theme]);
+
+  return <NavigationThemeProvider value={navigationTheme}>{children}</NavigationThemeProvider>;
 }
 
 export default function RootLayoutRoute() {

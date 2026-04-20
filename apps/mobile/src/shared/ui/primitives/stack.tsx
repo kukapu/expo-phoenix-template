@@ -1,9 +1,12 @@
 import type { PropsWithChildren } from "react";
+import type { StyleProp, ViewProps, ViewStyle } from "react-native";
 import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "../providers/theme-provider";
 
-export function Stack({ children, style, ...props }: PropsWithChildren<{ style?: any }>) {
+type StackProps = PropsWithChildren<ViewProps & { className?: string; style?: StyleProp<ViewStyle> }>;
+
+export function Stack({ children, className, style, ...props }: StackProps) {
   const theme = useTheme();
 
   const stackStyle = StyleSheet.create({
@@ -13,7 +16,7 @@ export function Stack({ children, style, ...props }: PropsWithChildren<{ style?:
   });
 
   return (
-    <View style={[stackStyle.stack, style]} {...props}>
+    <View className={className} style={[stackStyle.stack, style]} {...props}>
       {children}
     </View>
   );

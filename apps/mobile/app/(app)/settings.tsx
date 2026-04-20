@@ -28,16 +28,16 @@ export default function SettingsRoute() {
     >
       <UserSummaryCard user={state.session.user} />
       {optionalNavigationEntries.length > 0 ? (
-        <Stack>
-          <Text>Optional modules</Text>
+        <Stack className="gap-3">
+          <Text className="text-base">Optional modules</Text>
           {optionalNavigationEntries.map((entry) => (
-            <Button key={entry.href} onPress={() => router.push(entry.href)}>
+            <Button className="w-full" key={entry.href} onPress={() => router.push(entry.href)}>
               {entry.label}
             </Button>
           ))}
         </Stack>
       ) : null}
-      <Button onPress={() => void logout()}>
+      <Button className="w-full" onPress={() => void logout()}>
         Sign out
       </Button>
     </PlaceholderScreen>

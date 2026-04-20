@@ -20,6 +20,10 @@ export default (): ExpoConfig => {
     scheme: readOptionalEnv("EXPO_APP_SCHEME") ?? "snack",
     version: "0.0.0",
     platforms: ["android", "ios", "web"],
+    userInterfaceStyle: "automatic",
+    web: {
+      bundler: "metro"
+    },
     android: {
       package: readOptionalEnv("EXPO_ANDROID_PACKAGE") ?? "app.snack.mobile"
     },

@@ -13,7 +13,7 @@ export function AuthActionList({ busyProvider, onSelect }: AuthActionListProps) 
   const disabled = busyProvider !== null;
 
   return (
-    <Stack>
+    <Stack className="gap-3">
       <GoogleButton disabled={disabled} onPress={() => onSelect("google")} />
       <AppleButton disabled={disabled} onPress={() => onSelect("apple")} />
     </Stack>
@@ -53,6 +53,7 @@ function GoogleButton({ disabled, onPress }: BrandButtonProps) {
   return (
     <Pressable
       accessibilityRole="button"
+      className="w-full"
       disabled={disabled}
       onPress={() => onPress()}
       style={({ pressed }) => [
@@ -92,6 +93,7 @@ function AppleButton({ disabled, onPress }: BrandButtonProps) {
   return (
     <Pressable
       accessibilityRole="button"
+      className="w-full"
       disabled={disabled}
       onPress={() => onPress()}
       style={({ pressed }) => [

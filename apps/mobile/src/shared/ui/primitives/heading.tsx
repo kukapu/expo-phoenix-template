@@ -1,14 +1,16 @@
 import type { PropsWithChildren } from "react";
+import type { StyleProp, TextProps, TextStyle } from "react-native";
 import { StyleSheet, Text as RNText } from "react-native";
 
 import { useTheme } from "../providers/theme-provider";
 
-interface HeadingProps extends PropsWithChildren {
+interface HeadingProps extends PropsWithChildren<TextProps> {
   level?: 1 | 2 | 3 | 4;
-  style?: any;
+  className?: string;
+  style?: StyleProp<TextStyle>;
 }
 
-export function Heading({ children, level = 2, style, ...props }: HeadingProps) {
+export function Heading({ children, className, level = 2, style, ...props }: HeadingProps) {
   const theme = useTheme();
 
   const styles = StyleSheet.create({
@@ -20,7 +22,7 @@ export function Heading({ children, level = 2, style, ...props }: HeadingProps) 
   });
 
   return (
-    <RNText role="heading" aria-level={level} style={[styles.heading, style]} {...props}>
+    <RNText className={className} role="heading" aria-level={level} style={[styles.heading, style]} {...props}>
       {children}
     </RNText>
   );

@@ -10,6 +10,7 @@ function mapRnPropsToProps(props: Record<string, any>) {
     testID,
     accessibilityLabel,
     accessibilityRole,
+    accessibilityState,
     accessibilityLiveRegion,
     "aria-level": ariaLevel,
     ...rest
@@ -28,6 +29,9 @@ function mapRnPropsToProps(props: Record<string, any>) {
   if (accessibilityRole !== undefined) {
     mapped["role"] = accessibilityRole;
     delete mapped.accessibilityRole;
+  }
+  if (accessibilityState?.selected !== undefined) {
+    mapped["aria-pressed"] = accessibilityState.selected;
   }
   // Native `role` prop passes through directly to HTML role attribute
   // (already in rest, no mapping needed)
@@ -109,3 +113,6 @@ export const StyleSheet = {
 };
 
 export const Platform = { OS: "web" as const };
+export function useColorScheme() {
+  return "light" as const;
+}

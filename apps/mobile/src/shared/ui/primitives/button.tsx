@@ -1,16 +1,21 @@
 import type { PropsWithChildren } from "react";
+import type { PressableProps, StyleProp, TextStyle, ViewStyle } from "react-native";
 import { Pressable, StyleSheet, Text as RNText } from "react-native";
 
 import { useTheme } from "../providers/theme-provider";
 import { createInteractiveState } from "./shared";
 
-interface ButtonProps extends PropsWithChildren {
+interface ButtonProps extends PropsWithChildren<PressableProps> {
   tone?: "primary" | "destructive";
   disabled?: boolean;
   onPress?(): void;
+  className?: string;
+  textClassName?: string;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
-export function Button({ children, disabled, onPress, style, tone = "primary", ...props }: ButtonProps & { style?: any }) {
+export function Button({ children, className, disabled, onPress, style, textClassName, textStyle, tone = "primary", ...props }: ButtonProps) {
   const theme = useTheme();
   const backgroundColor = disabled
     ? theme.semantic.action.disabledBackground
@@ -45,6 +50,7 @@ export function Button({ children, disabled, onPress, style, tone = "primary", .
 
   return (
     <Pressable
+      className={className}
       data-tone={tone}
       disabled={disabled}
       onPress={() => onPress?.()}
@@ -55,7 +61,7 @@ export function Button({ children, disabled, onPress, style, tone = "primary", .
       ]}
       {...props}
     >
-      <RNText style={styles.label}>{children}</RNText>
+      <RNText className={textClassName} style={[styles.label, textStyle]}>{children}</RNText>
     </Pressable>
   );
 }

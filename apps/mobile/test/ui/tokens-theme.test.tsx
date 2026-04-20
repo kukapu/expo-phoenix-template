@@ -1,9 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import {
   ThemeProvider,
   createTheme,
+  darkTheme,
   lightTheme,
   primitiveBorderTokens,
   primitiveColorTokens,
@@ -14,7 +15,8 @@ import {
   primitiveSizeTokens,
   primitiveSpacingTokens,
   primitiveTypographyTokens,
-  useTheme
+  useTheme,
+  useThemePreference,
 } from "../../src/shared/ui";
 
 function ThemeProbe() {
@@ -35,6 +37,21 @@ function ThemeProbe() {
         <dd>{theme.semantic.action.primaryBackground}</dd>
       </div>
     </dl>
+  );
+}
+
+function ThemePreferenceProbe() {
+  const theme = useTheme();
+  const { preference, setPreference } = useThemePreference();
+
+  return (
+    <>
+      <span>{preference}</span>
+      <span>{theme.name}</span>
+      <button onClick={() => setPreference("dark")} type="button">
+        switch-dark
+      </button>
+    </>
   );
 }
 
@@ -131,5 +148,27 @@ describe("token and theme foundation", () => {
     expect(screen.getByText("dusk")).toBeInTheDocument();
     expect(screen.getByText("#020617")).toBeInTheDocument();
     expect(screen.getByText("#f97316")).toBeInTheDocument();
+  });
+
+  it("defines a dark theme variant with the shared semantic contract", () => {
+    expect(darkTheme.name).toBe("dark");
+    expect(darkTheme.semantic.color.screenBackground).toBe("#020617");
+    expect(darkTheme.semantic.text.default).toBe(lightTheme.primitives.color.slate50);
+    expect(darkTheme.semantic.action.primaryBackground).toBe("#60a5fa");
+  });
+
+  it("updates the resolved theme when the user selects a preference", () => {
+    render(
+      <ThemeProvider>
+        <ThemePreferenceProbe />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByText("system")).toBeInTheDocument();
+    expect(screen.getByText("light")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("switch-dark"));
+
+    expect(screen.getAllByText("dark")).toHaveLength(2);
   });
 });

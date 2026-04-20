@@ -37,9 +37,9 @@ export function BillingScreen({
 
   return (
     <Screen title="Subscription">
-      <Card title="Current Plan">
-        <Stack>
-          <Text>{planName}</Text>
+      <Card className="w-full" contentClassName="gap-4" title="Current Plan">
+        <Stack className="gap-4">
+          <Text className="text-base">{planName}</Text>
           {subscription.status === "pending" ? (
             <FormMessage tone="info">
               Your payment is processing. Refresh in a moment to see the latest status.
@@ -62,7 +62,7 @@ export function BillingScreen({
           {!subscription.cancelAtPeriodEnd &&
           subscription.status !== "canceling" &&
           subscription.status !== "pending" ? (
-            <Button tone="destructive" disabled={canceling} onPress={onCancel}>
+            <Button className="w-full" tone="destructive" disabled={canceling} onPress={onCancel}>
               Cancel Subscription
             </Button>
           ) : null}

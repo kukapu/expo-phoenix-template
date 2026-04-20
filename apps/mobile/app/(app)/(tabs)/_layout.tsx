@@ -1,18 +1,24 @@
 import { Tabs } from "expo-router";
 import Svg, { Circle, Path } from "react-native-svg";
 
+import { useTheme } from "../../../src/shared/ui";
+
 export default function TabsLayoutRoute() {
+  const theme = useTheme();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#2563eb",
-        tabBarInactiveTintColor: "#64748b",
+        tabBarActiveTintColor: theme.semantic.icon.accent,
+        tabBarInactiveTintColor: theme.semantic.icon.muted,
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: "600",
         },
         tabBarStyle: {
+          backgroundColor: theme.semantic.surface.elevated,
+          borderTopColor: theme.semantic.border.subtle,
           height: 62,
           paddingBottom: 8,
           paddingTop: 8,

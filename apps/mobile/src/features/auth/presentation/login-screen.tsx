@@ -21,16 +21,19 @@ export function LoginScreen() {
 
   return (
     <Screen
+      className="justify-center"
       description="Theme-driven auth presentation stays generic while the feature owns behavior."
       title="Welcome to Snack"
     >
       <Card
+        className="mx-auto w-full max-w-xl"
+        contentClassName="gap-5"
         description="Reusable auth access for the current app shell."
         title="Sign in to continue"
       >
         <AuthActionList busyProvider={busyProvider} onSelect={(provider) => void signInWith(provider)} />
-        {busyProvider ? <FormMessage tone="info">{`Signing in with ${busyProvider === "google" ? "Google" : "Apple"}…`}</FormMessage> : null}
-        {state.status === "signed-out" && state.error ? <FormMessage tone="error">{state.error}</FormMessage> : null}
+        {busyProvider ? <FormMessage className="text-center" tone="info">{`Signing in with ${busyProvider === "google" ? "Google" : "Apple"}…`}</FormMessage> : null}
+        {state.status === "signed-out" && state.error ? <FormMessage className="text-center" tone="error">{state.error}</FormMessage> : null}
       </Card>
     </Screen>
   );

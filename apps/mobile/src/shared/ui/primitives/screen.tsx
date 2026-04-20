@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from "react";
+import type { StyleProp, ViewStyle } from "react-native";
 import { StyleSheet, Text as RNText, View } from "react-native";
 
 import { useTheme } from "../providers/theme-provider";
@@ -8,9 +9,11 @@ interface ScreenProps extends PropsWithChildren {
   testId?: string;
   title?: string;
   description?: string;
+  className?: string;
+  style?: StyleProp<ViewStyle>;
 }
 
-export function Screen({ children, description, testId, title }: ScreenProps) {
+export function Screen({ children, className, description, style, testId, title }: ScreenProps) {
   const theme = useTheme();
 
   const styles = StyleSheet.create({
@@ -34,7 +37,7 @@ export function Screen({ children, description, testId, title }: ScreenProps) {
   });
 
   return (
-    <View style={styles.root} testID={testId}>
+    <View className={className} style={[styles.root, style]} testID={testId}>
       {title ? <RNText role="heading" aria-level={1} style={styles.title}>{title}</RNText> : null}
       {description ? <RNText style={styles.desc}>{description}</RNText> : null}
       {children}

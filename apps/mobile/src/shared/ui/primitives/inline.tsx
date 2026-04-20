@@ -1,9 +1,12 @@
 import type { PropsWithChildren } from "react";
+import type { StyleProp, ViewProps, ViewStyle } from "react-native";
 import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "../providers/theme-provider";
 
-export function Inline({ children, style, ...props }: PropsWithChildren<{ style?: any }>) {
+type InlineProps = PropsWithChildren<ViewProps & { className?: string; style?: StyleProp<ViewStyle> }>;
+
+export function Inline({ children, className, style, ...props }: InlineProps) {
   const theme = useTheme();
 
   const inlineStyle = StyleSheet.create({
@@ -16,7 +19,7 @@ export function Inline({ children, style, ...props }: PropsWithChildren<{ style?
   });
 
   return (
-    <View style={[inlineStyle.inline, style]} {...props}>
+    <View className={className} style={[inlineStyle.inline, style]} {...props}>
       {children}
     </View>
   );

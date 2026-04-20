@@ -1,9 +1,12 @@
 import type { PropsWithChildren } from "react";
+import type { StyleProp, TextProps, TextStyle } from "react-native";
 import { StyleSheet, Text as RNText } from "react-native";
 
 import { useTheme } from "../providers/theme-provider";
 
-export function Text({ children, style, ...props }: PropsWithChildren<{ style?: any }>) {
+type AppTextProps = PropsWithChildren<TextProps & { className?: string; style?: StyleProp<TextStyle> }>;
+
+export function Text({ children, className, style, ...props }: AppTextProps) {
   const theme = useTheme();
 
   const textStyle = StyleSheet.create({
@@ -16,7 +19,7 @@ export function Text({ children, style, ...props }: PropsWithChildren<{ style?: 
   });
 
   return (
-    <RNText style={[textStyle.text, style]} {...props}>
+    <RNText className={className} style={[textStyle.text, style]} {...props}>
       {children}
     </RNText>
   );

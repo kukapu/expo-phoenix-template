@@ -5,9 +5,10 @@ import { useTheme } from "../providers/theme-provider";
 
 interface FormMessageProps extends PropsWithChildren {
   tone: "info" | "success" | "error";
+  className?: string;
 }
 
-export function FormMessage({ children, tone }: FormMessageProps) {
+export function FormMessage({ children, className, tone }: FormMessageProps) {
   const theme = useTheme();
   const color = tone === "error" ? theme.semantic.state.danger : tone === "success" ? theme.semantic.state.success : theme.semantic.state.info;
 
@@ -21,6 +22,7 @@ export function FormMessage({ children, tone }: FormMessageProps) {
 
   return (
     <RNText
+      className={className}
       role={tone === "error" ? "alert" : "status"}
       style={styles.message}
     >

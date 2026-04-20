@@ -9,12 +9,14 @@ interface CardProps extends PropsWithChildren {
   title: string;
   description?: string;
   footer?: ReactNode;
+  className?: string;
+  contentClassName?: string;
 }
 
-export function Card({ children, description, footer, title }: CardProps) {
+export function Card({ children, className, contentClassName, description, footer, title }: CardProps) {
   return (
-    <Surface tone="elevated">
-      <Stack>
+    <Surface className={className} tone="elevated">
+      <Stack className={contentClassName}>
         <Heading>{title}</Heading>
         {description ? <Text>{description}</Text> : null}
         {children}

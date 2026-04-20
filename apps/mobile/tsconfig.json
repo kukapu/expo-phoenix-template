@@ -26,6 +26,7 @@
   "include": [
     "app",
     "app.config.ts",
+    "nativewind-env.d.ts",
     "src",
     "test",
     "vitest.config.ts"

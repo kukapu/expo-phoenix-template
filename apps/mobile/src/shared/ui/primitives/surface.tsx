@@ -1,11 +1,14 @@
 import type { PropsWithChildren } from "react";
+import type { StyleProp, ViewProps, ViewStyle } from "react-native";
 import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "../providers/theme-provider";
 
 type SurfaceTone = "base" | "elevated" | "selected";
 
-export function Surface({ children, style, tone = "base", ...props }: PropsWithChildren<{ tone?: SurfaceTone; style?: any; accessibilityLabel?: string }>) {
+type SurfaceProps = PropsWithChildren<ViewProps & { tone?: SurfaceTone; className?: string; style?: StyleProp<ViewStyle> }>;
+
+export function Surface({ children, className, style, tone = "base", ...props }: SurfaceProps) {
   const theme = useTheme();
 
   const backgroundColor =
@@ -26,7 +29,7 @@ export function Surface({ children, style, tone = "base", ...props }: PropsWithC
   });
 
   return (
-    <View style={[styles.surface, style]} {...props}>
+    <View className={className} style={[styles.surface, style]} {...props}>
       {children}
     </View>
   );

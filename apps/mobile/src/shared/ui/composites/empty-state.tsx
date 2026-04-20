@@ -8,13 +8,16 @@ interface EmptyStateProps {
   title: string;
   description: string;
   action?: ReactNode;
+  className?: string;
+  titleClassName?: string;
+  descriptionClassName?: string;
 }
 
-export function EmptyState({ action, description, title }: EmptyStateProps) {
+export function EmptyState({ action, className, description, descriptionClassName, title, titleClassName }: EmptyStateProps) {
   return (
-    <Stack>
-      <Heading>{title}</Heading>
-      <Text>{description}</Text>
+    <Stack className={className}>
+      <Heading className={titleClassName}>{title}</Heading>
+      <Text className={descriptionClassName}>{description}</Text>
       {action}
     </Stack>
   );

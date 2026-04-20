@@ -36,16 +36,18 @@ export function PlanPickerScreen({
 }: PlanPickerScreenProps) {
   if (loading) {
     return (
-      <Screen title="Choose a Plan">
-        <FormMessage tone="info">Loading plans…</FormMessage>
+      <Screen className="justify-center" title="Choose a Plan">
+        <FormMessage className="text-center" tone="info">Loading plans…</FormMessage>
       </Screen>
     );
   }
 
   if (error) {
     return (
-      <Screen title="Choose a Plan">
+      <Screen className="justify-center" title="Choose a Plan">
         <EmptyState
+          className="items-center"
+          descriptionClassName="text-center"
           title="Something went wrong"
           description={error}
           action={onRetry ? <Button onPress={onRetry}>Retry</Button> : undefined}
@@ -56,8 +58,10 @@ export function PlanPickerScreen({
 
   if (plans.length === 0) {
     return (
-      <Screen title="Choose a Plan">
+      <Screen className="justify-center" title="Choose a Plan">
         <EmptyState
+          className="items-center"
+          descriptionClassName="text-center"
           title="No plans available"
           description="Enable billing plans in the backend before exposing subscriptions in this app."
           action={onRetry ? <Button onPress={onRetry}>Refresh</Button> : undefined}
@@ -68,11 +72,11 @@ export function PlanPickerScreen({
 
   return (
     <Screen title="Choose a Plan">
-      <Stack>
+      <Stack className="gap-4">
         {plans.map((plan) => (
-          <Card key={plan.id} title={plan.name}>
-            <Text>{`${formatPrice(plan.amountCents, plan.currency)}/${formatInterval(plan.interval)}`}</Text>
-            <Button disabled={subscribing} onPress={() => onSubscribe(plan.id)}>
+          <Card className="w-full" contentClassName="gap-4" key={plan.id} title={plan.name}>
+            <Text className="text-base">{`${formatPrice(plan.amountCents, plan.currency)}/${formatInterval(plan.interval)}`}</Text>
+            <Button className="w-full" disabled={subscribing} onPress={() => onSubscribe(plan.id)}>
               Subscribe
             </Button>
           </Card>
