@@ -1,4 +1,4 @@
-import type { BootstrapConfig } from "@snack/contracts";
+import type { BootstrapConfig } from "@your-app/contracts";
 
 import type { HttpClient } from "./auth-api";
 

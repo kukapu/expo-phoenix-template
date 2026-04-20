@@ -1,5 +1,5 @@
-import type { AuthCallbackPayload, SessionBundle } from "@snack/contracts";
-import type { AuthProvider } from "@snack/mobile-shared";
+import type { AuthCallbackPayload, SessionBundle } from "@your-app/contracts";
+import type { AuthProvider } from "@your-app/mobile-shared";
 import {
   createContext,
   type PropsWithChildren,

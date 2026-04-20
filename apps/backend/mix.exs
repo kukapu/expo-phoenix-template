@@ -1,9 +1,9 @@
-defmodule Snack.MixProject do
+defmodule YourApp.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :snack,
+      app: :your_app,
       version: "0.1.0",
       elixir: "~> 1.18",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -21,7 +21,7 @@ defmodule Snack.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Snack.Application, []},
+      mod: {YourApp.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -76,22 +76,22 @@ defmodule Snack.MixProject do
 
   defp coverage_ignore_modules do
     [
-      Snack,
-      Snack.Application,
-      Snack.DataCase,
-      Snack.Repo,
-      Snack.TestSupport.FutureProvider,
-      Snack.TestSupport.ProviderTokenFactory,
-      SnackWeb,
-      SnackWeb.ConnCase,
-      SnackWeb.CoreComponents,
-      SnackWeb.Endpoint,
-      SnackWeb.ErrorHTML,
-      SnackWeb.ErrorJSON,
-      SnackWeb.Layouts,
-      SnackWeb.PageController,
-      SnackWeb.PageHTML,
-      SnackWeb.Telemetry
+      YourApp,
+      YourApp.Application,
+      YourApp.DataCase,
+      YourApp.Repo,
+      YourApp.TestSupport.FutureProvider,
+      YourApp.TestSupport.ProviderTokenFactory,
+      YourAppWeb,
+      YourAppWeb.ConnCase,
+      YourAppWeb.CoreComponents,
+      YourAppWeb.Endpoint,
+      YourAppWeb.ErrorHTML,
+      YourAppWeb.ErrorJSON,
+      YourAppWeb.Layouts,
+      YourAppWeb.PageController,
+      YourAppWeb.PageHTML,
+      YourAppWeb.Telemetry
     ]
   end
 end

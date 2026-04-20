@@ -23,7 +23,7 @@ export function LoginScreen() {
     <Screen
       className="justify-center"
       description="Theme-driven auth presentation stays generic while the feature owns behavior."
-      title="Welcome to Snack"
+      title="Welcome to YourApp"
     >
       <Card
         className="mx-auto w-full max-w-xl"

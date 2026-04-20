@@ -1,4 +1,4 @@
-defmodule Snack.Repo.Migrations.CreateBillingPlans do
+defmodule YourApp.Repo.Migrations.CreateBillingPlans do
   use Ecto.Migration
 
   def change do

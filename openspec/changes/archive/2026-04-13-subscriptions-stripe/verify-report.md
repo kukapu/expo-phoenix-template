@@ -66,20 +66,20 @@ Backend (mix test --cover):
 Key subscription file coverage:
 | File | Coverage |
 |------|----------|
-| Snack.Billing | 98% |
-| Snack.Billing.Customer | 100% |
-| Snack.Billing.Plan | 100% |
-| Snack.Billing.Subscription | 100% |
-| Snack.Billing.StripeClient | 100% |
-| Snack.Billing.MockStripeClient | 100% |
-| Snack.Billing.WebhookProcessor | 100% |
-| SnackWeb.Controllers.Api.ConfigController | 100% |
-| SnackWeb.Plugs.RequireFeature | 100% |
-| Snack.Features | 100% |
-| SnackWeb.Plugs.VerifyStripeSignature | 90% |
-| SnackWeb.Controllers.Api.WebhookController | 86% |
-| Snack.Billing.StripeClient.ReqImpl | 71% |
-| SnackWeb.Controllers.Api.BillingController | 65% |
+| YourApp.Billing | 98% |
+| YourApp.Billing.Customer | 100% |
+| YourApp.Billing.Plan | 100% |
+| YourApp.Billing.Subscription | 100% |
+| YourApp.Billing.StripeClient | 100% |
+| YourApp.Billing.MockStripeClient | 100% |
+| YourApp.Billing.WebhookProcessor | 100% |
+| YourAppWeb.Controllers.Api.ConfigController | 100% |
+| YourAppWeb.Plugs.RequireFeature | 100% |
+| YourApp.Features | 100% |
+| YourAppWeb.Plugs.VerifyStripeSignature | 90% |
+| YourAppWeb.Controllers.Api.WebhookController | 86% |
+| YourApp.Billing.StripeClient.ReqImpl | 71% |
+| YourAppWeb.Controllers.Api.BillingController | 65% |
 
 Mobile: ➖ No coverage tool (`@vitest/coverage-v8` not installed)
 

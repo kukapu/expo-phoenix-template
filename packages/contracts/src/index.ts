@@ -1,4 +1,4 @@
-export const contractsPackageName = "@snack/contracts";
+export const contractsPackageName = "@your-app/contracts";
 
 export * from "./auth";
 export * from "./billing";

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { SessionBundle } from "@snack/contracts";
-import { createSecureSessionStorage } from "@snack/mobile-shared";
+import type { SessionBundle } from "@your-app/contracts";
+import { createSecureSessionStorage } from "@your-app/mobile-shared";
 import { createCompleteAuthCallback } from "./complete-auth-callback";
 
 const session: SessionBundle = {

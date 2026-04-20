@@ -38,15 +38,15 @@ end
 # If you use `mix release`, you need to explicitly enable the server
 # by passing the PHX_SERVER=true when you start it:
 #
-#     PHX_SERVER=true bin/snack start
+#     PHX_SERVER=true bin/your_app start
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
 if System.get_env("PHX_SERVER") do
-  config :snack, SnackWeb.Endpoint, server: true
+  config :your_app, YourAppWeb.Endpoint, server: true
 end
 
-config :snack, SnackWeb.Endpoint, http: [port: String.to_integer(System.get_env("PORT", "4000"))]
+config :your_app, YourAppWeb.Endpoint, http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
 subscriptions_enabled? = System.get_env("ENABLE_SUBSCRIPTIONS") == "true"
 
@@ -64,7 +64,7 @@ split_csv_env = fn var, fallback ->
   end
 end
 
-config :snack,
+config :your_app,
   features: [
     subscriptions: subscriptions_enabled?
   ]
@@ -99,16 +99,16 @@ fetch_stripe_env = fn var, fallback_key ->
   end
 end
 
-config :snack, :stripe,
+config :your_app, :stripe,
   api_key: fetch_stripe_env.("STRIPE_SECRET_KEY", :api_key),
   base_url: System.get_env("STRIPE_BASE_URL", "https://api.stripe.com"),
   webhook_secret: fetch_stripe_env.("STRIPE_WEBHOOK_SECRET", :webhook_secret)
 
-config :snack, :stripe_mobile,
+config :your_app, :stripe_mobile,
   publishable_key: fetch_stripe_env.("STRIPE_PUBLISHABLE_KEY", :publishable_key),
-  merchant_display_name: System.get_env("STRIPE_MERCHANT_DISPLAY_NAME", "Snack"),
+  merchant_display_name: System.get_env("STRIPE_MERCHANT_DISPLAY_NAME", "YourApp"),
   merchant_identifier: System.get_env("STRIPE_MERCHANT_IDENTIFIER"),
-  url_scheme: System.get_env("STRIPE_URL_SCHEME", "snack")
+  url_scheme: System.get_env("STRIPE_URL_SCHEME", "your_app")
 
 if config_env() != :test do
   google_web_client_id = System.get_env("GOOGLE_WEB_CLIENT_ID")
@@ -121,7 +121,7 @@ if config_env() != :test do
     |> Enum.reject(&(&1 == ""))
 
   google_provider_config = [
-    module: Snack.Identity.Providers.Google,
+    module: YourApp.Identity.Providers.Google,
     audiences: google_audiences,
     issuers: ["https://accounts.google.com", "accounts.google.com"]
   ]
@@ -129,26 +129,26 @@ if config_env() != :test do
   apple_audiences =
     split_csv_env.(
       "APPLE_AUDIENCES",
-      System.get_env("EXPO_IOS_BUNDLE_IDENTIFIER", "app.snack.mobile")
+      System.get_env("EXPO_IOS_BUNDLE_IDENTIFIER", "app.yourapp.mobile")
     )
 
   apple_provider_config = [
-    module: Snack.Identity.Providers.Apple,
+    module: YourApp.Identity.Providers.Apple,
     audiences: apple_audiences,
     issuers: ["https://appleid.apple.com"]
   ]
 
-  config :snack, Snack.Auth,
+  config :your_app, YourApp.Auth,
     providers: %{
       google: google_provider_config,
       apple: apple_provider_config
     }
 end
 
-config :snack, Snack.Identity.Providers.GoogleJwksCache,
+config :your_app, YourApp.Identity.Providers.GoogleJwksCache,
   ttl_ms: String.to_integer(System.get_env("GOOGLE_JWKS_CACHE_TTL_MS", "600000"))
 
-config :snack, Snack.Identity.Providers.AppleJwksCache,
+config :your_app, YourApp.Identity.Providers.AppleJwksCache,
   ttl_ms: String.to_integer(System.get_env("APPLE_JWKS_CACHE_TTL_MS", "600000"))
 
 if config_env() == :prod do
@@ -166,7 +166,7 @@ if config_env() == :prod do
       Generate one with: mix phx.gen.secret
       """
 
-  config :snack, Snack.Auth,
+  config :your_app, YourApp.Auth,
     access_token_salt: access_token_salt,
     refresh_token_salt: refresh_token_salt
 end
@@ -181,7 +181,7 @@ if config_env() == :prod do
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
-  config :snack, Snack.Repo,
+  config :your_app, YourApp.Repo,
     ssl: System.get_env("DATABASE_SSL", "true") == "true",
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
@@ -203,9 +203,9 @@ if config_env() == :prod do
 
   host = System.get_env("PHX_HOST") || "example.com"
 
-  config :snack, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+  config :your_app, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
-  config :snack, SnackWeb.Endpoint,
+  config :your_app, YourAppWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
@@ -221,7 +221,7 @@ if config_env() == :prod do
   # To get SSL working, you will need to add the `https` key
   # to your endpoint configuration:
   #
-  #     config :snack, SnackWeb.Endpoint,
+  #     config :your_app, YourAppWeb.Endpoint,
   #       https: [
   #         ...,
   #         port: 443,
@@ -243,7 +243,7 @@ if config_env() == :prod do
   # We also recommend setting `force_ssl` in your config/prod.exs,
   # ensuring no data is ever sent via http, always redirecting to https:
   #
-  #     config :snack, SnackWeb.Endpoint,
+  #     config :your_app, YourAppWeb.Endpoint,
   #       force_ssl: [hsts: true]
   #
   # Check `Plug.SSL` for all available options in `force_ssl`.

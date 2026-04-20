@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { HttpClient } from "./auth-api";
-import type { BillingPlansResponse, Plan, Subscription } from "@snack/contracts";
+import type { BillingPlansResponse, Plan, Subscription } from "@your-app/contracts";
 import { createBillingApi } from "./billing-api";
 
 describe("createBillingApi", () => {

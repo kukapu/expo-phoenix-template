@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { Plan, Subscription } from "@snack/contracts";
+import type { Plan, Subscription } from "@your-app/contracts";
 
 import { SubscriptionsRouteContent } from "../../app/(app)/subscriptions";
 import { SubscriptionShellProvider } from "../../src/features/subscriptions/presentation";

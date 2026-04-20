@@ -1,4 +1,4 @@
-import type { BillingCheckoutResponse, Plan, Subscription } from "@snack/contracts";
+import type { BillingCheckoutResponse, Plan, Subscription } from "@your-app/contracts";
 import {
   createContext,
   type PropsWithChildren,

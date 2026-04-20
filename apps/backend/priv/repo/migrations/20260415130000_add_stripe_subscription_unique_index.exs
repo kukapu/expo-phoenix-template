@@ -1,4 +1,4 @@
-defmodule Snack.Repo.Migrations.AddStripeSubscriptionUniqueIndex do
+defmodule YourApp.Repo.Migrations.AddStripeSubscriptionUniqueIndex do
   use Ecto.Migration
 
   def change do

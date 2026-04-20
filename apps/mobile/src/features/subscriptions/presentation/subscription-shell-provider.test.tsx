@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { Plan, Subscription } from "@snack/contracts";
+import type { Plan, Subscription } from "@your-app/contracts";
 import {
   SubscriptionShellProvider,
   useSubscriptionShell

@@ -1,4 +1,4 @@
-import type { StripeMobileConfig } from "@snack/contracts";
+import type { StripeMobileConfig } from "@your-app/contracts";
 import type { PropsWithChildren, ReactElement } from "react";
 import { useEffect, useState } from "react";
 import Constants from "expo-constants";

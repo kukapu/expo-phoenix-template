@@ -2,20 +2,20 @@
 
 ### Current State
 
-The snack monorepo has three completed and archived changes providing:
-- **Backend**: Phoenix 1.8 with `Snack.Accounts` (user CRUD), `Snack.Identity` (OAuth provider login via Google/Apple), `Snack.Sessions` (token-based session lifecycle with refresh-token rotation). API controllers under `SnackWeb.Controllers.Api` serve `/api/auth/:provider/callback`, `/api/session/refresh`, `/api/session`. Config via `Snack.Auth` module reads from application env.
+The your_app monorepo has three completed and archived changes providing:
+- **Backend**: Phoenix 1.8 with `YourApp.Accounts` (user CRUD), `YourApp.Identity` (OAuth provider login via Google/Apple), `YourApp.Sessions` (token-based session lifecycle with refresh-token rotation). API controllers under `YourAppWeb.Controllers.Api` serve `/api/auth/:provider/callback`, `/api/session/refresh`, `/api/session`. Config via `YourApp.Auth` module reads from application env.
 - **Mobile**: Expo Router app with feature-first architecture. `features/auth/` has four layers (presentation, application, domain, infrastructure). Shared layers: `api`, `config`, `storage`, `ui`, `device`. Theme-aware UI system with tokens, primitives, composites, and app-shell components. Navigation uses `(app)` (authenticated drawer+tabs) and `(public)` (login) route groups.
-- **Shared packages**: `@snack/contracts` (type contracts for auth/session), `@snack/mobile-shared` (infrastructure adapters: AuthApi, SessionApi, SecureSessionStorage, AuthConfig).
+- **Shared packages**: `@your-app/contracts` (type contracts for auth/session), `@your-app/mobile-shared` (infrastructure adapters: AuthApi, SessionApi, SecureSessionStorage, AuthConfig).
 
 No billing or subscription code exists yet. The backend has no Stripe dependency. The mobile app has no paywall or plan concept.
 
 ### Affected Areas
 
 #### Backend
-- `apps/backend/lib/snack/` — new `Billing` context (customer, subscription, plan schemas + context module)
-- `apps/backend/lib/snack_web/controllers/api/` — new `BillingController`, `WebhookController`
-- `apps/backend/lib/snack_web/router.ex` — new route scope for billing API + webhook endpoint
-- `apps/backend/lib/snack/application.ex` — optional supervision tree entry for webhook processor
+- `apps/backend/lib/your_app/` — new `Billing` context (customer, subscription, plan schemas + context module)
+- `apps/backend/lib/your_app_web/controllers/api/` — new `BillingController`, `WebhookController`
+- `apps/backend/lib/your_app_web/router.ex` — new route scope for billing API + webhook endpoint
+- `apps/backend/lib/your_app/application.ex` — optional supervision tree entry for webhook processor
 - `apps/backend/config/` — Stripe API keys, feature flag config, webhook secret
 - `apps/backend/mix.exs` — add Stripe client dependency (or use Req directly)
 - `apps/backend/test/` — new test modules for Billing context + controller tests
@@ -37,14 +37,14 @@ No billing or subscription code exists yet. The backend has no Stripe dependency
 
 #### 1. Self-Contained Billing Context with Runtime Feature Flag (RECOMMENDED)
 
-A new `Snack.Billing` context that is structurally independent from existing contexts, gated by a runtime configuration flag. On mobile, a new `features/subscriptions/` feature module that is always compiled but conditionally rendered via a feature-flag hook.
+A new `YourApp.Billing` context that is structurally independent from existing contexts, gated by a runtime configuration flag. On mobile, a new `features/subscriptions/` feature module that is always compiled but conditionally rendered via a feature-flag hook.
 
 **Backend**:
-- `Snack.Billing` context owns: Customer, Subscription, Plan schemas; subscription lifecycle logic; Stripe API integration
-- `Snack.Features` module reads `config :snack, :features, subscriptions: true/false`
+- `YourApp.Billing` context owns: Customer, Subscription, Plan schemas; subscription lifecycle logic; Stripe API integration
+- `YourApp.Features` module reads `config :your_app, :features, subscriptions: true/false`
 - Router uses a custom pipeline `plug :require_feature, :subscriptions` that returns 404 when disabled
 - Webhook endpoint always exists (returns 200 regardless) but only processes events when enabled
-- `Snack.Billing.StripeClient` behaviour + `Req`-based implementation for Stripe API calls
+- `YourApp.Billing.StripeClient` behaviour + `Req`-based implementation for Stripe API calls
 
 **Mobile**:
 - `features/subscriptions/` with presentation/application/domain/infrastructure layers
@@ -78,8 +78,8 @@ Mobile always ships minimal subscription UI shell; backend controls all feature 
 
 This is the right call because:
 1. **Follows existing patterns**: The `auth` feature already demonstrates the four-layer feature-first pattern. `Billing` should follow the same convention on both backend (context) and mobile (feature module).
-2. **Runtime flag over compile-time**: This is a *starter* — derived apps need to toggle subscriptions per deployment, not per build. A runtime flag via application config (`config :snack, :features, subscriptions: true`) is idiomatic Elixir and trivially configurable via env vars in production.
-3. **Backend context boundary is natural**: Phoenix contexts map perfectly to bounded contexts. `Snack.Billing` is a clean domain boundary — it references `Snack.Accounts.User` but doesn't modify it. It adds a `stripe_customer_id` to its own `Customer` schema rather than polluting the User schema.
+2. **Runtime flag over compile-time**: This is a *starter* — derived apps need to toggle subscriptions per deployment, not per build. A runtime flag via application config (`config :your_app, :features, subscriptions: true`) is idiomatic Elixir and trivially configurable via env vars in production.
+3. **Backend context boundary is natural**: Phoenix contexts map perfectly to bounded contexts. `YourApp.Billing` is a clean domain boundary — it references `YourApp.Accounts.User` but doesn't modify it. It adds a `stripe_customer_id` to its own `Customer` schema rather than polluting the User schema.
 4. **Mobile feature isolation**: The `features/subscriptions/` directory can be deleted by derived apps that don't need it, and the feature flag prevents any broken imports or navigation.
 5. **Req for Stripe API**: AGENTS.md mandates Req. Rather than adding a Stripe Elixir SDK dependency, use Req directly with Stripe's REST API. It's well-documented, has no dependency overhead, and gives full control over request/response handling.
 
@@ -88,7 +88,7 @@ This is the right call because:
 #### Backend Module Boundaries
 
 ```
-lib/snack/
+lib/your_app/
 ├── billing.ex                    # Context module — public API for billing operations
 ├── billing/
 │   ├── customer.ex               # Schema: stripe_customer_id, user_id reference
@@ -98,7 +98,7 @@ lib/snack/
 │   ├── stripe_client/req_impl.ex # Req-based implementation
 │   └── webhook_processor.ex      # Receives and processes Stripe webhook events
 ├── features.ex                   # Feature flag reader module
-lib/snack_web/controllers/api/
+lib/your_app_web/controllers/api/
 ├── billing_controller.ex         # REST API for plans, subscribe, cancel, status
 ├── webhook_controller.ex         # Stripe webhook endpoint
 ```
@@ -146,22 +146,22 @@ Key design decisions:
 
 #### Feature Flag Mechanism
 
-**Backend** (`Snack.Features`):
+**Backend** (`YourApp.Features`):
 ```elixir
-defmodule Snack.Features do
+defmodule YourApp.Features do
   def enabled?(feature) when is_atom(feature) do
     features_config()
     |> Keyword.get(feature, false)
   end
 
-  defp features_config, do: Application.get_env(:snack, :features, [])
+  defp features_config, do: Application.get_env(:your_app, :features, [])
 end
 ```
 
 Config:
 ```elixir
 # config/runtime.exs
-config :snack, :features, subscriptions: System.get_env("ENABLE_SUBSCRIPTIONS") == "true"
+config :your_app, :features, subscriptions: System.get_env("ENABLE_SUBSCRIPTIONS") == "true"
 ```
 
 **Mobile** (`shared/config/feature-flags.ts`):
@@ -208,5 +208,5 @@ export function useFeatureFlag(flag: keyof FeatureFlags): boolean {
 5. **Feature flag defaults and configuration surface**: Which env vars, what the mobile config shape looks like
 6. **Database schema design**: Exact table structures for customers, subscriptions, plans
 7. **API contract**: REST endpoints, request/response shapes
-8. **Mobile contracts package additions**: New types for `@snack/contracts`
+8. **Mobile contracts package additions**: New types for `@your-app/contracts`
 9. **Rollout strategy**: How derived apps opt in (set flag, run migrations, configure Stripe keys)

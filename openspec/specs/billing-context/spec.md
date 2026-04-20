@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the self-contained `Snack.Billing` Phoenix context handling plans, subscriptions, Stripe integration, and webhook processing.
+Define the self-contained `YourApp.Billing` Phoenix context handling plans, subscriptions, Stripe integration, and webhook processing.
 
 ## Requirements
 
@@ -73,7 +73,7 @@ An authenticated user MUST be able to retrieve their current subscription status
 
 ### Requirement: StripeClient Behaviour
 
-All Stripe API interactions MUST go through a `Snack.Billing.StripeClient` behaviour. The production implementation MUST use Req. Tests MUST use a mock implementation.
+All Stripe API interactions MUST go through a `YourApp.Billing.StripeClient` behaviour. The production implementation MUST use Req. Tests MUST use a mock implementation.
 
 #### Scenario: Behaviour is used for checkout
 
@@ -115,10 +115,10 @@ Each webhook event MUST be processed idempotently by Stripe event ID. Duplicate 
 
 ### Requirement: Billing Context Isolation
 
-`Snack.Billing` MUST be a self-contained Phoenix context. It MUST NOT import modules from other app contexts. Other contexts MAY subscribe to billing events via a published event bus.
+`YourApp.Billing` MUST be a self-contained Phoenix context. It MUST NOT import modules from other app contexts. Other contexts MAY subscribe to billing events via a published event bus.
 
 #### Scenario: Billing context has no inbound dependencies
 
 - GIVEN the billing context is compiled
 - WHEN its module dependencies are inspected
-- THEN no imports from other app contexts (e.g., `Snack.Accounts`) exist
+- THEN no imports from other app contexts (e.g., `YourApp.Accounts`) exist

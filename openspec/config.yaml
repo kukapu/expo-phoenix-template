@@ -4,7 +4,7 @@ context: |
   Stack: pnpm v10 monorepo with Turbo.
   Frontend/mobile: TypeScript workspace in `apps/mobile` with Vitest and tsconfig path aliases.
   Backend: Phoenix 1.8 / Elixir 1.18 in `apps/backend` with Ecto + PostgreSQL.
-  Shared packages: `@snack/contracts` and `@snack/mobile-shared`.
+  Shared packages: `@your-app/contracts` and `@your-app/mobile-shared`.
   Architecture: polyglot monorepo; mobile uses presentation/application/domain/infrastructure layers.
   Style: TS strict mode plus Phoenix/Elixir conventions from `apps/backend/AGENTS.md`.
 

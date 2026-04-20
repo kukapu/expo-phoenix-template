@@ -1,7 +1,7 @@
-defmodule Snack.Billing.FailingStripeClient do
+defmodule YourApp.Billing.FailingStripeClient do
   @moduledoc false
 
-  @behaviour Snack.Billing.StripeClient
+  @behaviour YourApp.Billing.StripeClient
 
   @impl true
   def create_customer(_params, _opts) do

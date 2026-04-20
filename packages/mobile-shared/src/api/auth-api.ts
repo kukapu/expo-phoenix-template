@@ -1,4 +1,4 @@
-import type { AuthCallbackPayload, SessionBundle } from "@snack/contracts";
+import type { AuthCallbackPayload, SessionBundle } from "@your-app/contracts";
 
 export type AuthProvider = "google" | "apple";
 

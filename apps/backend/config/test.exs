@@ -5,17 +5,17 @@ import Config
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :snack, Snack.Repo,
+config :your_app, YourApp.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "snack_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "your_app_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :snack, SnackWeb.Endpoint,
+config :your_app, YourAppWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "iUXnk0MZ+AMaKjraKMrpODJyZGEP9Pr4ytmm5cIhq4uNKZ1PjHdtWUHbii8tfgwk",
   server: false
@@ -34,12 +34,12 @@ config :phoenix_live_view,
 config :phoenix,
   sort_verified_routes_query_params: true
 
-config :snack, Snack.Auth,
+config :your_app, YourApp.Auth,
   access_token_ttl_seconds: 900,
   refresh_token_ttl_days: 30,
-  access_token_salt: "snack-access-token-test",
-  refresh_token_salt: "snack-refresh-token-test",
+  access_token_salt: "your-app-access-token-test",
+  refresh_token_salt: "your-app-refresh-token-test",
   providers: %{
-    google: Snack.Identity.Providers.Google,
-    apple: Snack.Identity.Providers.Apple
+    google: YourApp.Identity.Providers.Google,
+    apple: YourApp.Identity.Providers.Apple
   }

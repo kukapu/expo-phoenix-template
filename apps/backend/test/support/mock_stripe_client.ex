@@ -1,9 +1,9 @@
-defmodule Snack.Billing.MockStripeClient do
+defmodule YourApp.Billing.MockStripeClient do
   @moduledoc """
   Mock StripeClient for tests. Returns predictable values.
   """
 
-  @behaviour Snack.Billing.StripeClient
+  @behaviour YourApp.Billing.StripeClient
 
   @impl true
   def create_customer(%{email: email}, _opts) do

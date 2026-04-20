@@ -1,4 +1,4 @@
-# Snack Starter
+# YourApp Starter
 
 Reusable Expo mobile starter for building multiple apps on top of the same foundation.
 

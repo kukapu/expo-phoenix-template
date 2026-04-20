@@ -1,4 +1,4 @@
-import type { Subscription } from "@snack/contracts";
+import type { Subscription } from "@your-app/contracts";
 
 import { Button } from "../../../shared/ui";
 import { Card } from "../../../shared/ui";

@@ -1,4 +1,4 @@
-import { createBootstrapConfig, type BootstrapConfig } from "@snack/contracts";
+import { createBootstrapConfig, type BootstrapConfig } from "@your-app/contracts";
 
 export interface FeatureFlagReader {
   isEnabled(flagKey: string): boolean;

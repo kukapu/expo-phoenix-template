@@ -1,7 +1,7 @@
 import { createContext, type PropsWithChildren, useContext, useMemo } from "react";
 
-import type { BootstrapConfig } from "@snack/contracts";
-import type { FeatureFlagReader } from "@snack/mobile-shared";
+import type { BootstrapConfig } from "@your-app/contracts";
+import type { FeatureFlagReader } from "@your-app/mobile-shared";
 
 interface RuntimeConfigContextValue {
   apiBaseUrl: string;

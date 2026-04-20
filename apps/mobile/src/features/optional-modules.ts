@@ -1,4 +1,4 @@
-import type { SessionBundle } from "@snack/contracts";
+import type { SessionBundle } from "@your-app/contracts";
 
 import { canAccessDomain, createDomainViewer, type DomainAccessRule } from "../shared/authz/domain-access";
 import { subscriptionsRoute } from "./subscriptions/route-config";

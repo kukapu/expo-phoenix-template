@@ -1,4 +1,4 @@
-import type { BillingCheckoutResponse } from "@snack/contracts";
+import type { BillingCheckoutResponse } from "@your-app/contracts";
 
 import {
   loadStripeRuntimeModule,

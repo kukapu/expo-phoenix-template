@@ -63,10 +63,10 @@ Dependency direction: presentation -> application -> domain; infrastructure impl
 Phoenix module rule:
 
 ```text
-Snack.Accounts    # users
-Snack.Identity    # provider verification, identity linking
-Snack.Sessions    # access/refresh issuance, rotation, revocation
-SnackWeb.Controllers.Api.{AuthController,SessionController}
+YourApp.Accounts    # users
+YourApp.Identity    # provider verification, identity linking
+YourApp.Sessions    # access/refresh issuance, rotation, revocation
+YourAppWeb.Controllers.Api.{AuthController,SessionController}
 Dependency direction: Web -> contexts; Sessions depends on Accounts identities by IDs, never on web/mobile code.
 ```
 

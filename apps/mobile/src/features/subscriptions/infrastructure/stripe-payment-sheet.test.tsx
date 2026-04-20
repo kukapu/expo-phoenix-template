@@ -18,9 +18,9 @@ function wrapper({ children }: PropsWithChildren) {
         services: {
           stripe: {
             publishableKey: "pk_test_123",
-            merchantDisplayName: "Snack",
-            merchantIdentifier: "merchant.snack",
-            urlScheme: "snack"
+            merchantDisplayName: "YourApp",
+            merchantIdentifier: "merchant.yourapp",
+            urlScheme: "your_app"
           }
         }
       }}

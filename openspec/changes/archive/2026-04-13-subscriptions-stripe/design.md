@@ -2,14 +2,14 @@
 
 ## Technical Approach
 
-Self-contained `Snack.Billing` Phoenix context and `features/subscriptions/` mobile module, both gated by a runtime feature flag read from application config. Backend uses a `StripeClient` behaviour with Req for all Stripe API calls (no SDK). Mobile uses Stripe Payment Sheet for native checkout. Plans are synced locally from Stripe and kept current via idempotent webhooks. Feature flag defaults `false` — zero impact when disabled. Follows existing patterns: Phoenix context boundary like `Snack.Accounts`, mobile four-layer feature module like `features/auth/`.
+Self-contained `YourApp.Billing` Phoenix context and `features/subscriptions/` mobile module, both gated by a runtime feature flag read from application config. Backend uses a `StripeClient` behaviour with Req for all Stripe API calls (no SDK). Mobile uses Stripe Payment Sheet for native checkout. Plans are synced locally from Stripe and kept current via idempotent webhooks. Feature flag defaults `false` — zero impact when disabled. Follows existing patterns: Phoenix context boundary like `YourApp.Accounts`, mobile four-layer feature module like `features/auth/`.
 
 ## Architecture Decisions
 
 | Decision | Choice | Alternatives considered | Rationale |
 |---|---|---|---|
 | Stripe HTTP client | `StripeClient` behaviour + Req impl | `stripity_stripe` Elixir SDK | AGENTS.md mandates Req; behaviour enables test doubles without mocking HTTP |
-| Feature flag source | `Application.get_env(:snack, :features)` via `runtime.exs` | Compile-time exclusion, DB-backed flags | Runtime flag allows per-deployment toggle; idiomatic Elixir; env-var-driven for containers |
+| Feature flag source | `Application.get_env(:your_app, :features)` via `runtime.exs` | Compile-time exclusion, DB-backed flags | Runtime flag allows per-deployment toggle; idiomatic Elixir; env-var-driven for containers |
 | Mobile flag source | Bootstrap/config API response from backend | Hardcoded env vars on mobile | Backend is single source of truth; prevents state drift |
 | Payment UX | Stripe Payment Sheet (native) | Custom checkout UI, WebView | Native UX with minimal integration effort; handles card collection + 3DS |
 | Plan storage | Local DB synced from Stripe via webhooks | Always query Stripe API | Fast reads; offline-capable list; webhook events keep local data current |
@@ -64,19 +64,19 @@ Stripe ──POST /api/webhooks/stripe──> WebhookController
 
 | File | Action | Description |
 |------|--------|-------------|
-| `apps/backend/lib/snack/billing.ex` | Create | Context module: list_plans, subscribe, cancel, get_subscription, handle_event |
-| `apps/backend/lib/snack/billing/customer.ex` | Create | Schema: `stripe_customer_id`, `user_id` FK, `email` |
-| `apps/backend/lib/snack/billing/subscription.ex` | Create | Schema: `status`, `plan_id`, `stripe_subscription_id`, `stripe_event_id` (unique), `current_period_end`, `cancel_at_period_end` |
-| `apps/backend/lib/snack/billing/plan.ex` | Create | Schema: `name`, `stripe_price_id`, `amount_cents`, `currency`, `interval` |
-| `apps/backend/lib/snack/billing/stripe_client.ex` | Create | Behaviour: `create_customer/2`, `create_checkout_session/2`, `cancel_subscription/2`, `list_prices/1` |
-| `apps/backend/lib/snack/billing/stripe_client/req_impl.ex` | Create | Req-based implementation of StripeClient behaviour |
-| `apps/backend/lib/snack/billing/webhook_processor.ex` | Create | Event parsing, idempotency check, dispatch to Billing context |
-| `apps/backend/lib/snack/features.ex` | Create | Generic flag reader: `enabled?(feature)` from `:features` app env |
-| `apps/backend/lib/snack_web/controllers/api/billing_controller.ex` | Create | REST: plans, subscribe, cancel, subscription status |
-| `apps/backend/lib/snack_web/controllers/api/webhook_controller.ex` | Create | Webhook endpoint with signature verification |
-| `apps/backend/lib/snack_web/plugs/require_feature.ex` | Create | Plug: returns 404 when feature flag disabled |
-| `apps/backend/lib/snack_web/router.ex` | Modify | Add billing API scope with `require_feature` pipeline + webhook route |
-| `apps/backend/lib/snack/application.ex` | Modify | No supervision changes needed — webhook is synchronous in controller |
+| `apps/backend/lib/your_app/billing.ex` | Create | Context module: list_plans, subscribe, cancel, get_subscription, handle_event |
+| `apps/backend/lib/your_app/billing/customer.ex` | Create | Schema: `stripe_customer_id`, `user_id` FK, `email` |
+| `apps/backend/lib/your_app/billing/subscription.ex` | Create | Schema: `status`, `plan_id`, `stripe_subscription_id`, `stripe_event_id` (unique), `current_period_end`, `cancel_at_period_end` |
+| `apps/backend/lib/your_app/billing/plan.ex` | Create | Schema: `name`, `stripe_price_id`, `amount_cents`, `currency`, `interval` |
+| `apps/backend/lib/your_app/billing/stripe_client.ex` | Create | Behaviour: `create_customer/2`, `create_checkout_session/2`, `cancel_subscription/2`, `list_prices/1` |
+| `apps/backend/lib/your_app/billing/stripe_client/req_impl.ex` | Create | Req-based implementation of StripeClient behaviour |
+| `apps/backend/lib/your_app/billing/webhook_processor.ex` | Create | Event parsing, idempotency check, dispatch to Billing context |
+| `apps/backend/lib/your_app/features.ex` | Create | Generic flag reader: `enabled?(feature)` from `:features` app env |
+| `apps/backend/lib/your_app_web/controllers/api/billing_controller.ex` | Create | REST: plans, subscribe, cancel, subscription status |
+| `apps/backend/lib/your_app_web/controllers/api/webhook_controller.ex` | Create | Webhook endpoint with signature verification |
+| `apps/backend/lib/your_app_web/plugs/require_feature.ex` | Create | Plug: returns 404 when feature flag disabled |
+| `apps/backend/lib/your_app_web/router.ex` | Modify | Add billing API scope with `require_feature` pipeline + webhook route |
+| `apps/backend/lib/your_app/application.ex` | Modify | No supervision changes needed — webhook is synchronous in controller |
 | `apps/backend/config/runtime.exs` | Modify | Add `:features` config + Stripe env vars |
 | `apps/backend/priv/repo/migrations/` | Create | Migrations for customers, plans, subscriptions tables |
 | `packages/contracts/src/billing.ts` | Create | `Plan`, `Subscription`, `SubscriptionStatus`, `BillingState` types |
@@ -97,7 +97,7 @@ Stripe ──POST /api/webhooks/stripe──> WebhookController
 ### Backend — StripeClient Behaviour
 
 ```elixir
-defmodule Snack.Billing.StripeClient do
+defmodule YourApp.Billing.StripeClient do
   @callback create_customer(email: String.t()) :: {:ok, map()} | {:error, term()}
   @callback create_checkout_session(customer_id: String.t(), price_id: String.t(), success_url: String.t(), cancel_url: String.t()) :: {:ok, map()} | {:error, term()}
   @callback cancel_subscription(subscription_id: String.t()) :: {:ok, map()} | {:error, term()}
@@ -108,12 +108,12 @@ end
 ### Backend — Feature Flag Module
 
 ```elixir
-defmodule Snack.Features do
+defmodule YourApp.Features do
   @callback enabled?(feature :: atom()) :: boolean()
 end
 ```
 
-Read from `Application.get_env(:snack, :features, [])`. Plug `require_feature` calls `Snack.Features.enabled?/1` and halts with 404 when false.
+Read from `Application.get_env(:your_app, :features, [])`. Plug `require_feature` calls `YourApp.Features.enabled?/1` and halts with 404 when false.
 
 ### Backend — API Contracts
 
@@ -207,14 +207,14 @@ Logic: if flag disabled → render children (no subscription system). If flag en
 
 ## Implementation Decomposition Guidance
 
-1. **Backend — Feature flag foundation**: `Snack.Features` module, `RequireFeature` plug, `features` config in `runtime.exs`. Tests first.
+1. **Backend — Feature flag foundation**: `YourApp.Features` module, `RequireFeature` plug, `features` config in `runtime.exs`. Tests first.
 2. **Backend — Schemas + migrations**: `Customer`, `Plan`, `Subscription` schemas and their migrations. Schema tests first.
 3. **Backend — StripeClient behaviour + Req impl**: Define behaviour, implement `ReqImpl`. Unit tests with mock.
 4. **Backend — Billing context**: `list_plans`, `subscribe`, `cancel`, `get_subscription`, `handle_event`. Context tests with mock StripeClient.
 5. **Backend — WebhookProcessor**: Event parsing, signature verification plug, idempotency, dispatch. Integration tests.
 6. **Backend — Controllers + routes**: `BillingController`, `WebhookController`, router modifications. ConnCase integration tests.
-7. **Contracts — Billing types**: `billing.ts` in `@snack/contracts`. Type tests.
-8. **Mobile-Shared — Billing API + Feature flags**: `createBillingApi`, `createFeatureFlagReader` in `@snack/mobile-shared`. Unit tests.
+7. **Contracts — Billing types**: `billing.ts` in `@your-app/contracts`. Type tests.
+8. **Mobile-Shared — Billing API + Feature flags**: `createBillingApi`, `createFeatureFlagReader` in `@your-app/mobile-shared`. Unit tests.
 9. **Mobile — Domain layer**: `subscription-types.ts`, `access-rules.ts`. Pure function tests.
 10. **Mobile — Application layer**: Use case hooks: `fetchPlans`, `subscribeToPlan`, `cancelSubscription`, `checkAccess`. Mock API tests.
 11. **Mobile — Infrastructure layer**: `SubscriptionApi` adapter, `StripePaymentSheet` integration. Unit tests.

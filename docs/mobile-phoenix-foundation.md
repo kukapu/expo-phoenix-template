@@ -13,7 +13,7 @@ Phoenix owns provider validation, identity resolution, user creation, session is
 
 - Google mobile sign-in must produce a backend callback payload with `providerToken` and device metadata.
 - Apple sign-in must include `providerToken`, `authorizationCode`, `idToken`, `nonce`, and device metadata.
-- The current foundation uses provider modules under `apps/backend/lib/snack/identity/providers/` so production-grade JWT/JWKS validation can replace the stubbed foundation rules without changing controller or context boundaries.
+- The current foundation uses provider modules under `apps/backend/lib/your_app/identity/providers/` so production-grade JWT/JWKS validation can replace the stubbed foundation rules without changing controller or context boundaries.
 
 ## Version matrix
 

@@ -1,4 +1,4 @@
-import { createAuthCallbackPayload, type AuthCallbackPayload } from "@snack/contracts";
+import { createAuthCallbackPayload, type AuthCallbackPayload } from "@your-app/contracts";
 
 interface NativeAppleCredential {
   providerToken: string;

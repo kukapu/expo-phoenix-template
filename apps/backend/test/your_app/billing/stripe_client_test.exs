@@ -1,0 +1,54 @@
+defmodule YourApp.Billing.StripeClientTest do
+  use ExUnit.Case, async: false
+
+  alias YourApp.Billing.StripeClient
+
+  describe "behaviour conformance" do
+    test "MockStripeClient implements all StripeClient callbacks" do
+      behaviours = StripeClient.behaviour_info(:callbacks)
+
+      for {fun, arity} <- behaviours do
+        assert function_exported?(YourApp.Billing.MockStripeClient, fun, arity),
+               "MockStripeClient missing callback: #{fun}/#{arity}"
+      end
+    end
+  end
+
+  describe "MockStripeClient.create_customer/2" do
+    test "returns a customer map with stripe_customer_id" do
+      assert {:ok, %{stripe_customer_id: "cus_mock_" <> _}} =
+               YourApp.Billing.MockStripeClient.create_customer(%{email: "test@example.com"}, [])
+    end
+  end
+
+  describe "MockStripeClient.create_payment_sheet_session/2" do
+    test "returns payment sheet session data with stripe_subscription_id" do
+      assert {:ok,
+              %{
+                customer_id: "cus_mock_1",
+                customer_ephemeral_key_secret: "ek_mock_" <> _,
+                payment_intent_client_secret: "pi_mock_secret_" <> _,
+                stripe_subscription_id: "sub_mock_" <> _
+              }} =
+               YourApp.Billing.MockStripeClient.create_payment_sheet_session(
+                 %{customer_id: "cus_mock_1", price_id: "price_mock_pro"},
+                 []
+               )
+    end
+  end
+
+  describe "MockStripeClient.cancel_subscription/2" do
+    test "returns cancellation confirmation" do
+      assert {:ok,
+              %{status: "active", cancel_at_period_end: true, current_period_end: %DateTime{}}} =
+               YourApp.Billing.MockStripeClient.cancel_subscription("sub_mock_1", [])
+    end
+  end
+
+  describe "MockStripeClient.list_prices/1" do
+    test "returns a list of price maps" do
+      assert {:ok, prices} = YourApp.Billing.MockStripeClient.list_prices([])
+      assert is_list(prices)
+    end
+  end
+end

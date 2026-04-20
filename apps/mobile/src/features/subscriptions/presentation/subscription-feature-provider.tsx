@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { useMemo } from "react";
 
-import { createBillingApi } from "@snack/mobile-shared";
+import { createBillingApi } from "@your-app/mobile-shared";
 
 import { useSessionShell } from "../../auth/presentation";
 import { SubscriptionShellProvider } from "./subscription-shell-provider";

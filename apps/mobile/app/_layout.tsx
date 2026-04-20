@@ -8,8 +8,8 @@ import { Slot } from "expo-router";
 import Constants from "expo-constants";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import type { BootstrapConfig } from "@snack/contracts";
-import { createConfigApi, createFeatureFlagReader, type FeatureFlagReader } from "@snack/mobile-shared";
+import type { BootstrapConfig } from "@your-app/contracts";
+import { createConfigApi, createFeatureFlagReader, type FeatureFlagReader } from "@your-app/mobile-shared";
 
 import { SessionShellProvider, type SessionShellServices } from "../src/features/auth/presentation";
 import { createJsonHttpClient } from "../src/shared/api";

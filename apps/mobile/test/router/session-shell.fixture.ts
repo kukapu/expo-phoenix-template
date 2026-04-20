@@ -1,4 +1,4 @@
-import type { SessionBundle } from "@snack/contracts";
+import type { SessionBundle } from "@your-app/contracts";
 
 import type { SessionShellServices } from "../../src/features/auth/presentation";
 

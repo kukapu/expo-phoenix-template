@@ -7,29 +7,29 @@
 # General application configuration
 import Config
 
-config :snack,
-  ecto_repos: [Snack.Repo],
+config :your_app,
+  ecto_repos: [YourApp.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-config :snack, Snack.Auth,
+config :your_app, YourApp.Auth,
   access_token_ttl_seconds: 900,
   refresh_token_ttl_days: 30,
-  access_token_salt: "snack-access-token",
-  refresh_token_salt: "snack-refresh-token",
+  access_token_salt: "your-app-access-token",
+  refresh_token_salt: "your-app-refresh-token",
   providers: %{
-    google: Snack.Identity.Providers.Google,
-    apple: Snack.Identity.Providers.Apple
+    google: YourApp.Identity.Providers.Google,
+    apple: YourApp.Identity.Providers.Apple
   }
 
 # Configure the endpoint
-config :snack, SnackWeb.Endpoint,
+config :your_app, YourAppWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: SnackWeb.ErrorHTML, json: SnackWeb.ErrorJSON],
+    formats: [html: YourAppWeb.ErrorHTML, json: YourAppWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Snack.PubSub,
+  pubsub_server: YourApp.PubSub,
   live_view: [signing_salt: "/5NL+uU4"]
 
 # Configure Elixir's Logger

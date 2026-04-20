@@ -9,7 +9,7 @@
 
 ## Summary
 
-Stripe-based subscription module with runtime feature flag gating. Self-contained `Snack.Billing` Phoenix context (Customer, Subscription, Plan schemas, StripeClient behaviour with Req, webhook processing with idempotency) and `features/subscriptions/` mobile module (four-layer architecture with Paywall, PlanPickerScreen, BillingScreen, SubscriptionShellProvider). 55 tasks across 10 phases + 6 verification fixes. 207/207 tests passing. 0 TypeScript errors.
+Stripe-based subscription module with runtime feature flag gating. Self-contained `YourApp.Billing` Phoenix context (Customer, Subscription, Plan schemas, StripeClient behaviour with Req, webhook processing with idempotency) and `features/subscriptions/` mobile module (four-layer architecture with Paywall, PlanPickerScreen, BillingScreen, SubscriptionShellProvider). 55 tasks across 10 phases + 6 verification fixes. 207/207 tests passing. 0 TypeScript errors.
 
 ## Specs Synced
 

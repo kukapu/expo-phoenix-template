@@ -1,4 +1,4 @@
-import type { DevicePlatform } from "@snack/contracts";
+import type { DevicePlatform } from "@your-app/contracts";
 
 interface DeviceInfo {
   installationId: string;

@@ -15,9 +15,9 @@ export default (): ExpoConfig => {
   const googleIosUrlScheme = readOptionalEnv("GOOGLE_IOS_URL_SCHEME");
 
   return {
-    name: readOptionalEnv("EXPO_APP_NAME") ?? "Snack",
-    slug: readOptionalEnv("EXPO_APP_SLUG") ?? "snack",
-    scheme: readOptionalEnv("EXPO_APP_SCHEME") ?? "snack",
+    name: readOptionalEnv("EXPO_APP_NAME") ?? "YourApp",
+    slug: readOptionalEnv("EXPO_APP_SLUG") ?? "your_app",
+    scheme: readOptionalEnv("EXPO_APP_SCHEME") ?? "your_app",
     version: "0.0.0",
     platforms: ["android", "ios", "web"],
     userInterfaceStyle: "automatic",
@@ -25,10 +25,10 @@ export default (): ExpoConfig => {
       bundler: "metro"
     },
     android: {
-      package: readOptionalEnv("EXPO_ANDROID_PACKAGE") ?? "app.snack.mobile"
+      package: readOptionalEnv("EXPO_ANDROID_PACKAGE") ?? "app.yourapp.mobile"
     },
     ios: {
-      bundleIdentifier: readOptionalEnv("EXPO_IOS_BUNDLE_IDENTIFIER") ?? "app.snack.mobile"
+      bundleIdentifier: readOptionalEnv("EXPO_IOS_BUNDLE_IDENTIFIER") ?? "app.yourapp.mobile"
     },
     plugins: [
       ...(googleIosUrlScheme

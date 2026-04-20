@@ -1,4 +1,4 @@
-import type { SessionBundle } from "@snack/contracts";
+import type { SessionBundle } from "@your-app/contracts";
 
 import type { AuthSessionStorage } from "../domain/session-storage";
 

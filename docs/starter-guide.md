@@ -183,7 +183,7 @@ Good extension points:
 - `apps/mobile/src/shared/ui` for reusable design system pieces
 - `packages/contracts` for shared payload changes
 - `packages/mobile-shared` for reusable mobile adapters
-- `apps/backend/lib/snack_web/controllers/api` for new API endpoints
+- `apps/backend/lib/your_app_web/controllers/api` for new API endpoints
 
 Avoid:
 

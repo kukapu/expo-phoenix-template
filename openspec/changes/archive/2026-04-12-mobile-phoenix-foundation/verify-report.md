@@ -74,16 +74,16 @@ Coverage data is only available for backend Elixir modules via `mix test --cover
 
 | File | Line % | Branch % | Uncovered Lines | Rating |
 |------|--------|----------|-----------------|--------|
-| `apps/backend/lib/snack/accounts.ex` | 100.00% | n/a | not surfaced by `mix test --cover` CLI | ✅ Excellent |
-| `apps/backend/lib/snack/auth.ex` | 90.91% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
-| `apps/backend/lib/snack/identity.ex` | 93.75% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
-| `apps/backend/lib/snack/sessions.ex` | 91.23% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
-| `apps/backend/lib/snack/identity/providers/google.ex` | 91.67% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
-| `apps/backend/lib/snack/identity/providers/apple.ex` | 88.24% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
-| `apps/backend/lib/snack/identity/providers/jwt_verifier.ex` | 84.13% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
-| `apps/backend/lib/snack_web/controllers/api/auth_controller.ex` | 100.00% | n/a | — | ✅ Excellent |
-| `apps/backend/lib/snack_web/controllers/api/session_controller.ex` | 100.00% | n/a | — | ✅ Excellent |
-| `apps/backend/lib/snack_web/router.ex` | 100.00% | n/a | — | ✅ Excellent |
+| `apps/backend/lib/your_app/accounts.ex` | 100.00% | n/a | not surfaced by `mix test --cover` CLI | ✅ Excellent |
+| `apps/backend/lib/your_app/auth.ex` | 90.91% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
+| `apps/backend/lib/your_app/identity.ex` | 93.75% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
+| `apps/backend/lib/your_app/sessions.ex` | 91.23% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
+| `apps/backend/lib/your_app/identity/providers/google.ex` | 91.67% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
+| `apps/backend/lib/your_app/identity/providers/apple.ex` | 88.24% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
+| `apps/backend/lib/your_app/identity/providers/jwt_verifier.ex` | 84.13% | n/a | not surfaced by `mix test --cover` CLI | ⚠️ Acceptable |
+| `apps/backend/lib/your_app_web/controllers/api/auth_controller.ex` | 100.00% | n/a | — | ✅ Excellent |
+| `apps/backend/lib/your_app_web/controllers/api/session_controller.ex` | 100.00% | n/a | — | ✅ Excellent |
+| `apps/backend/lib/your_app_web/router.ex` | 100.00% | n/a | — | ✅ Excellent |
 
 **Average changed backend file coverage**: 94.99%
 
@@ -104,21 +104,21 @@ Coverage data is only available for backend Elixir modules via `mix test --cover
 
 | Requirement | Scenario | Test | Result |
 |-------------|----------|------|--------|
-| Polyglot Monorepo Structure | Foundation layout exists | `apps/mobile/test/foundation.test.ts > resolves workspace packages and boundary metadata`; `apps/backend/test/snack/foundation_test.exs > backend foundation modules are available` | ⚠️ PARTIAL |
+| Polyglot Monorepo Structure | Foundation layout exists | `apps/mobile/test/foundation.test.ts > resolves workspace packages and boundary metadata`; `apps/backend/test/your_app/foundation_test.exs > backend foundation modules are available` | ⚠️ PARTIAL |
 | Shared Contract Boundary | Cross-app integration uses shared contracts | `packages/contracts/src/auth.test.ts > builds the google callback DTO with the required device metadata`; `packages/contracts/src/session.test.ts > returns the backend-issued access and refresh token bundle`; `apps/mobile/src/features/auth/application/complete-auth-callback.test.ts > submits callback credentials to Phoenix and persists the issued session in secure storage` | ⚠️ PARTIAL |
-| Extensible Foundation Rules | Future capability is added | `apps/backend/test/snack/identity_test.exs > allows a future provider to plug into Identity without changing Sessions ownership` | ✅ COMPLIANT |
+| Extensible Foundation Rules | Future capability is added | `apps/backend/test/your_app/identity_test.exs > allows a future provider to plug into Identity without changing Sessions ownership` | ✅ COMPLIANT |
 | Feature-First Mobile Boundaries | Auth feature follows layered boundaries | `apps/mobile/test/foundation.test.ts > resolves workspace packages and boundary metadata` | ⚠️ PARTIAL |
-| Native Provider Initiation | Google sign-in succeeds | `apps/mobile/src/features/auth/infrastructure/google-provider.test.ts > maps native Google credentials into the backend callback payload`; `apps/mobile/src/features/auth/application/complete-auth-callback.test.ts > submits callback credentials to Phoenix and persists the issued session in secure storage`; `apps/backend/test/snack_web/controllers/api/auth_controller_test.exs > creates the user and returns a backend session bundle on first login` | ⚠️ PARTIAL |
-| Native Provider Initiation | Apple sign-in succeeds | `apps/mobile/src/features/auth/infrastructure/apple-provider.test.ts > maps native Apple credentials into the backend callback payload with nonce support`; `apps/mobile/src/features/auth/application/complete-auth-callback.test.ts > forwards Apple-specific callback fields to Phoenix before persisting the session`; `apps/backend/test/snack_web/controllers/api/auth_controller_test.exs > accepts Apple callbacks when the nonce is present` | ⚠️ PARTIAL |
+| Native Provider Initiation | Google sign-in succeeds | `apps/mobile/src/features/auth/infrastructure/google-provider.test.ts > maps native Google credentials into the backend callback payload`; `apps/mobile/src/features/auth/application/complete-auth-callback.test.ts > submits callback credentials to Phoenix and persists the issued session in secure storage`; `apps/backend/test/your_app_web/controllers/api/auth_controller_test.exs > creates the user and returns a backend session bundle on first login` | ⚠️ PARTIAL |
+| Native Provider Initiation | Apple sign-in succeeds | `apps/mobile/src/features/auth/infrastructure/apple-provider.test.ts > maps native Apple credentials into the backend callback payload with nonce support`; `apps/mobile/src/features/auth/application/complete-auth-callback.test.ts > forwards Apple-specific callback fields to Phoenix before persisting the session`; `apps/backend/test/your_app_web/controllers/api/auth_controller_test.exs > accepts Apple callbacks when the nonce is present` | ⚠️ PARTIAL |
 | Secure Device Session Storage | Session is cached on device | `apps/mobile/src/features/auth/application/complete-auth-callback.test.ts > submits callback credentials to Phoenix and persists the issued session in secure storage` | ✅ COMPLIANT |
-| Phoenix Context Separation | Backend auth behavior is assigned by context | `apps/backend/test/snack/foundation_test.exs > backend auth behavior is assigned by context` | ✅ COMPLIANT |
-| Backend Identity Ownership | First provider login creates user | `apps/backend/test/snack/identity_test.exs > creates the user and provider identity on first login`; `apps/backend/test/snack_web/controllers/api/auth_controller_test.exs > creates the user and returns a backend session bundle on first login` | ✅ COMPLIANT |
-| Backend Identity Ownership | Existing provider login resolves user | `apps/backend/test/snack/identity_test.exs > reuses the existing user for a returning provider login`; `apps/backend/test/snack_web/controllers/api/auth_controller_test.exs > returns the existing user on returning login without duplicating the account` | ✅ COMPLIANT |
-| Initial Auth Data Model | Auth state is persisted | `apps/backend/test/snack/identity_test.exs > creates the user and provider identity on first login`; `apps/backend/test/snack/sessions_test.exs > creates a device-scoped session family and token bundle` | ✅ COMPLIANT |
-| Backend Session Lifecycle Ownership | Session is issued after provider validation | `apps/backend/test/snack_web/controllers/api/auth_controller_test.exs > creates the user and returns a backend session bundle on first login`; `apps/backend/test/snack_web/controllers/api/auth_controller_test.exs > rejects invalid Google credentials` | ✅ COMPLIANT |
-| Short-Lived Access With Rotating Refresh | Refresh succeeds | `apps/backend/test/snack_web/controllers/api/session_controller_test.exs > rotates the refresh token and returns a replacement bundle` | ✅ COMPLIANT |
-| Short-Lived Access With Rotating Refresh | Refresh token reuse is detected | `apps/backend/test/snack_web/controllers/api/session_controller_test.exs > rejects reuse of a rotated refresh token` | ✅ COMPLIANT |
-| Device-Aware Logout | User logs out on device | `apps/mobile/src/features/auth/application/logout-session.test.ts > clears secure storage before revoking the device session`; `apps/backend/test/snack_web/controllers/api/session_controller_test.exs > revokes the device session for logout` | ✅ COMPLIANT |
+| Phoenix Context Separation | Backend auth behavior is assigned by context | `apps/backend/test/your_app/foundation_test.exs > backend auth behavior is assigned by context` | ✅ COMPLIANT |
+| Backend Identity Ownership | First provider login creates user | `apps/backend/test/your_app/identity_test.exs > creates the user and provider identity on first login`; `apps/backend/test/your_app_web/controllers/api/auth_controller_test.exs > creates the user and returns a backend session bundle on first login` | ✅ COMPLIANT |
+| Backend Identity Ownership | Existing provider login resolves user | `apps/backend/test/your_app/identity_test.exs > reuses the existing user for a returning provider login`; `apps/backend/test/your_app_web/controllers/api/auth_controller_test.exs > returns the existing user on returning login without duplicating the account` | ✅ COMPLIANT |
+| Initial Auth Data Model | Auth state is persisted | `apps/backend/test/your_app/identity_test.exs > creates the user and provider identity on first login`; `apps/backend/test/your_app/sessions_test.exs > creates a device-scoped session family and token bundle` | ✅ COMPLIANT |
+| Backend Session Lifecycle Ownership | Session is issued after provider validation | `apps/backend/test/your_app_web/controllers/api/auth_controller_test.exs > creates the user and returns a backend session bundle on first login`; `apps/backend/test/your_app_web/controllers/api/auth_controller_test.exs > rejects invalid Google credentials` | ✅ COMPLIANT |
+| Short-Lived Access With Rotating Refresh | Refresh succeeds | `apps/backend/test/your_app_web/controllers/api/session_controller_test.exs > rotates the refresh token and returns a replacement bundle` | ✅ COMPLIANT |
+| Short-Lived Access With Rotating Refresh | Refresh token reuse is detected | `apps/backend/test/your_app_web/controllers/api/session_controller_test.exs > rejects reuse of a rotated refresh token` | ✅ COMPLIANT |
+| Device-Aware Logout | User logs out on device | `apps/mobile/src/features/auth/application/logout-session.test.ts > clears secure storage before revoking the device session`; `apps/backend/test/your_app_web/controllers/api/session_controller_test.exs > revokes the device session for logout` | ✅ COMPLIANT |
 
 **Compliance summary**: 10/15 scenarios compliant
 
@@ -128,16 +128,16 @@ Coverage data is only available for backend Elixir modules via `mix test --cover
 | Requirement | Status | Notes |
 |------------|--------|-------|
 | Polyglot Monorepo Structure | ✅ Implemented | Top-level `apps/mobile`, `apps/backend`, `packages/contracts`, `packages/mobile-shared`, and `infra` exist with root workspace config. |
-| Shared Contract Boundary | ✅ Implemented | Mobile code depends on `@snack/contracts` / `@snack/mobile-shared`; no direct app-to-app runtime dependency evidence was found in the verified scope. |
+| Shared Contract Boundary | ✅ Implemented | Mobile code depends on `@your-app/contracts` / `@your-app/mobile-shared`; no direct app-to-app runtime dependency evidence was found in the verified scope. |
 | Extensible Foundation Rules | ✅ Implemented | Provider lookup is config-driven, and a future provider can plug into `Identity` without changing `Sessions` ownership. |
 | Feature-First Mobile Boundaries | ✅ Implemented | `features/auth/{presentation,application,domain,infrastructure}` and `shared/{api,config,storage,ui,device}` are present and wired. |
 | Native Provider Initiation | ✅ Implemented | Google/Apple adapters map native credentials into backend callback payloads, and the app persists only backend-issued sessions. |
 | Secure Device Session Storage | ✅ Implemented | Secure storage adapter is the only persistence path in scope. |
-| Phoenix Context Separation | ✅ Implemented | `Snack.Accounts`, `Snack.Identity`, and `Snack.Sessions` remain separate contexts with API controllers delegating into them. |
+| Phoenix Context Separation | ✅ Implemented | `YourApp.Accounts`, `YourApp.Identity`, and `YourApp.Sessions` remain separate contexts with API controllers delegating into them. |
 | Backend Identity Ownership | ✅ Implemented | Phoenix validates provider JWTs, resolves/creates identities, and only then issues app sessions. |
 | Initial Auth Data Model | ✅ Implemented | Users, provider identities, devices, session families, and refresh tokens are first-class persisted records. |
 | Backend Session Lifecycle Ownership | ✅ Implemented | Session issuance, refresh, rotation, revocation, and logout all remain backend-owned. |
-| Short-Lived Access With Rotating Refresh | ✅ Implemented | Refresh rotation and reuse revocation are implemented in `Snack.Sessions`. |
+| Short-Lived Access With Rotating Refresh | ✅ Implemented | Refresh rotation and reuse revocation are implemented in `YourApp.Sessions`. |
 | Device-Aware Logout | ✅ Implemented | Mobile clears local secure storage, and Phoenix revokes the device session lineage. |
 
 ---

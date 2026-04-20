@@ -19,13 +19,13 @@ See `.agents/skills/mobile-styling.md` for the full guide.
 
 ## Key Commands
 
-- `pnpm --filter @snack/mobile test` — Run mobile tests
+- `pnpm --filter @your-app/mobile test` — Run mobile tests
 - `pnpm test` — Run all tests (mobile + backend)
-- `pnpm --filter @snack/mobile exec tsc --noEmit` — Type check mobile (has pre-existing errors, not from our changes)
+- `pnpm --filter @your-app/mobile exec tsc --noEmit` — Type check mobile (has pre-existing errors, not from our changes)
 
 ## Pre-commit/Merge Checks
 
-Always run `pnpm --filter @snack/mobile test` before declaring work done on mobile.
+Always run `pnpm --filter @your-app/mobile test` before declaring work done on mobile.
 
 ## Dependency Pinning
 

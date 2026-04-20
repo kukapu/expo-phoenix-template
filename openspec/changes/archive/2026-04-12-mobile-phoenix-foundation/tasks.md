@@ -19,9 +19,9 @@ Acceptance focus: RED/GREEN/REFACTOR begins once Phase 1 runners pass.
 ## Phase 3: Phoenix Identity & Session Foundation (Strict TDD)
 Acceptance focus: Phoenix owns users, identities, devices, and session lifecycle.
 
-- [x] 3.1 RED: add ExUnit coverage in `apps/backend/test/snack/{accounts,identity,sessions}_test.exs` and controller tests for first login, returning login, refresh, reuse detection, and device logout.
-- [x] 3.2 GREEN: implement `Snack.Accounts`, `Snack.Identity`, `Snack.Sessions`, Ecto migrations/schemas for `users`, `provider_identities`, `devices`, `session_families`, `refresh_tokens`, and API routes/controllers.
-- [x] 3.3 REFACTOR: centralize backend auth config in `apps/backend/config/*.exs` and provider modules under `lib/snack/identity/providers/` while keeping ExUnit green.
+- [x] 3.1 RED: add ExUnit coverage in `apps/backend/test/your_app/{accounts,identity,sessions}_test.exs` and controller tests for first login, returning login, refresh, reuse detection, and device logout.
+- [x] 3.2 GREEN: implement `YourApp.Accounts`, `YourApp.Identity`, `YourApp.Sessions`, Ecto migrations/schemas for `users`, `provider_identities`, `devices`, `session_families`, `refresh_tokens`, and API routes/controllers.
+- [x] 3.3 REFACTOR: centralize backend auth config in `apps/backend/config/*.exs` and provider modules under `lib/your_app/identity/providers/` while keeping ExUnit green.
 
 ## Phase 4: Provider Flows, Wiring & Verification (Strict TDD)
 Acceptance focus: native providers, bootstrap, refresh rotation, and docs align with approved scope.

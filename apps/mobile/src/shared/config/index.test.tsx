@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { describe, expect, it } from "vitest";
 
-import type { FeatureFlagReader } from "@snack/mobile-shared";
+import type { FeatureFlagReader } from "@your-app/mobile-shared";
 import { RuntimeConfigProvider, useFeatureFlag, useRuntimeConfig } from "../config";
 
 function createReader(flags: Record<string, boolean>): FeatureFlagReader {
@@ -118,9 +118,9 @@ describe("useFeatureFlag", () => {
           services: {
             stripe: {
               publishableKey: "pk_test_123",
-              merchantDisplayName: "Snack",
-              merchantIdentifier: "merchant.snack",
-              urlScheme: "snack"
+              merchantDisplayName: "YourApp",
+              merchantIdentifier: "merchant.yourapp",
+              urlScheme: "your_app"
             }
           }
         }}

@@ -4,7 +4,7 @@ import type {
   BillingPlansResponse,
   BillingSubscriptionResponse,
   Plan
-} from "@snack/contracts";
+} from "@your-app/contracts";
 
 import type { HttpClient } from "./auth-api";
 

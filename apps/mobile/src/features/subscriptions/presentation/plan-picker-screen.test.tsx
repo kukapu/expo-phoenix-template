@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { Plan } from "@snack/contracts";
+import type { Plan } from "@your-app/contracts";
 import { PlanPickerScreen } from "./plan-picker-screen";
 
 const plans: Plan[] = [

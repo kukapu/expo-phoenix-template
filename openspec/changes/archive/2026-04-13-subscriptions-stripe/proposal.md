@@ -7,14 +7,14 @@ Add a self-contained subscription module that derived apps can opt into via a ru
 ## Scope
 
 ### In Scope
-- `Snack.Billing` Phoenix context (Customer, Subscription, Plan schemas + lifecycle)
-- `Snack.Features` runtime flag module (backend) + `useFeatureFlag` hook (mobile)
-- `Snack.Billing.StripeClient` behaviour with Req-based implementation
+- `YourApp.Billing` Phoenix context (Customer, Subscription, Plan schemas + lifecycle)
+- `YourApp.Features` runtime flag module (backend) + `useFeatureFlag` hook (mobile)
+- `YourApp.Billing.StripeClient` behaviour with Req-based implementation
 - Webhook processor with signature verification and idempotent event handling
 - `features/subscriptions/` mobile module (all four layers)
 - Paywall component (`<Paywall feature="X">`) and SubscriptionShellProvider
 - Stripe Payment Sheet integration for native payment UX
-- New contracts in `@snack/contracts` and API adapter in `@snack/mobile-shared`
+- New contracts in `@your-app/contracts` and API adapter in `@your-app/mobile-shared`
 - DB migrations for customers, subscriptions, plans tables
 - REST API: list plans, subscribe, cancel, get status
 
@@ -33,23 +33,23 @@ Add a self-contained subscription module that derived apps can opt into via a ru
 ### New Capabilities
 - `billing-context`: Backend Billing context with Customer, Subscription, Plan schemas, Stripe integration, and webhook processing
 - `subscription-feature-mobile`: Mobile subscriptions feature module with paywall, plan picker, and Stripe Payment Sheet
-- `feature-flags`: Runtime feature flag system (backend `Snack.Features` + mobile `useFeatureFlag`)
+- `feature-flags`: Runtime feature flag system (backend `YourApp.Features` + mobile `useFeatureFlag`)
 
 ### Modified Capabilities
 - `mobile-shell-navigation`: Add conditional subscription screens to authenticated shell when flag is enabled
 
 ## Approach
 
-Self-contained Billing context on backend, feature-first subscriptions module on mobile, both gated by a runtime feature flag. Backend uses `Snack.Billing.StripeClient` behaviour with Req for Stripe API calls (no Elixir SDK). Mobile uses Stripe Payment Sheet for native checkout. Plans are synced locally from Stripe and kept current via webhooks. Feature flag defaults to `false` — zero impact when disabled.
+Self-contained Billing context on backend, feature-first subscriptions module on mobile, both gated by a runtime feature flag. Backend uses `YourApp.Billing.StripeClient` behaviour with Req for Stripe API calls (no Elixir SDK). Mobile uses Stripe Payment Sheet for native checkout. Plans are synced locally from Stripe and kept current via webhooks. Feature flag defaults to `false` — zero impact when disabled.
 
 ## Affected Areas
 
 | Area | Impact | Description |
 |------|--------|-------------|
-| `apps/backend/lib/snack/billing/` | New | Billing context, schemas, Stripe client behaviour |
-| `apps/backend/lib/snack/features.ex` | New | Feature flag reader module |
-| `apps/backend/lib/snack_web/controllers/api/` | New | BillingController, WebhookController |
-| `apps/backend/lib/snack_web/router.ex` | Modified | Billing API scope + webhook route with feature pipeline |
+| `apps/backend/lib/your_app/billing/` | New | Billing context, schemas, Stripe client behaviour |
+| `apps/backend/lib/your_app/features.ex` | New | Feature flag reader module |
+| `apps/backend/lib/your_app_web/controllers/api/` | New | BillingController, WebhookController |
+| `apps/backend/lib/your_app_web/router.ex` | Modified | Billing API scope + webhook route with feature pipeline |
 | `apps/backend/priv/repo/migrations/` | New | Customers, subscriptions, plans tables |
 | `apps/backend/config/` | Modified | Stripe keys, feature flag config |
 | `apps/mobile/src/features/subscriptions/` | New | Full feature module (4 layers) |

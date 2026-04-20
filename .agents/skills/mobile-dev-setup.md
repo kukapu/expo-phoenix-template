@@ -34,7 +34,7 @@ Or for a specific platform: `npx expo start --clear --android` / `--ios` / `--we
 
 ```bash
 # Mobile
-pnpm --filter @snack/mobile test
+pnpm --filter @your-app/mobile test
 
 # Backend
 cd apps/backend && mix test
@@ -46,7 +46,7 @@ pnpm test
 ## Key Ports
 
 - **Backend API**: `localhost:4000`
-- **PostgreSQL**: `localhost:5432` (user: `postgres`, pass: `postgres`, db: `snack_dev`)
+- **PostgreSQL**: `localhost:5432` (user: `postgres`, pass: `postgres`, db: `your_app_dev`)
 - **Expo Dev Server**: `localhost:8081`
 
 ## Environment Variables
